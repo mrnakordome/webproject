@@ -272,9 +272,9 @@
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
         <a href="javascript:void(0)" class="close-sidebar" onclick="closeSidebar()">&times;</a>
-        <a href="#">Question Management</a>
-        <a href="#">Category Management</a>
-        <a href="#">Admin Main Page</a>
+        <a href="#" style="background-color: #f1f1f1">Admin Main Page</a>
+        <a href="javascript:void(0)" onclick="goToQuestionManagement()">Question Management</a>
+        <a href="javascript:void(0)" onclick="goToCategoryManagement()">Category Management</a>
     </div>
 
     <!-- Main Content -->
@@ -321,17 +321,23 @@
             document.getElementById('sidebar').style.width = '0';
             document.getElementById('mainContent').style.marginLeft = '0';
         }
+        
+        function goToAdminMain() {
+            // Redirect to admin main Page
+            alert('Navigating to Admin Main Page...');
+            window.location.href = 'admin main.html';
+        }
 
         function goToQuestionManagement() {
             // Redirect to Question Management Page
             alert('Navigating to Question Management Page...');
-            // window.location.href = 'question_management.html';
+            window.location.href = 'question_management.html';
         }
 
         function goToCategoryManagement() {
             // Redirect to Category Management Page
             alert('Navigating to Category Management Page...');
-            // window.location.href = 'category_management.html';
+            window.location.href = 'category_management.html';
         }
 
         // Close sidebar when clicking outside

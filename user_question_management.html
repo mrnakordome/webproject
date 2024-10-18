@@ -375,9 +375,9 @@
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
         <a href="javascript:void(0)" class="close-sidebar" onclick="closeSidebar()">&times;</a>
-        <a href="#">Leaderboard</a>
-        <a href="#">User Dashboard</a>
-        <a href="#">Main Page</a>
+        <a href="javascript:void(0)" onclick="goToUserMain()">User Main</a>
+        <a href="#" style="background-color: #f1f1f1">Question Management</a>
+        <a href="javascript:void(0)" onclick="goToLeaderboard()">Leaderboard</a>
     </div>
 
     <!-- Main Content -->
@@ -457,6 +457,24 @@
             // Add your logout logic here
             alert('Logging out...');
             window.location.href = 'loginmenu.html';
+        }
+
+        function goToUserMain() {
+            // Redirect to admin main Page
+            alert('Navigating to User Main Page...');
+            window.location.href = 'user main.html';
+        }
+
+        function goToUserQuestionManagement() {
+            // Redirect to Question Management Page
+            alert('Navigating to User Question Management Page...');
+            window.location.href = 'user_question_management.html';
+        }
+
+        function goToLeaderboard() {
+            // Redirect to Category Management Page
+            alert('Navigating to Leaderboard Page...');
+            window.location.href = 'leaderboard.html';
         }
 
         function openSidebar() {
