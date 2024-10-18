@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Main Page</title>
+    <style>
+        :root {
+            --background-color: #f0f0f0;
+            --text-color: #333;
+            --button-background: #6200ee;
+            --button-text-color: #fff;
+            --toggle-button-background: #6200ee;
+            --toggle-button-text-color: #fff;
+            --link-color: #6200ee;
+            --modal-background: rgba(0, 0, 0, 0.5);
+            --modal-content-background: #fff;
+            --sidebar-width: 250px;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
+        }
+
+        /* Header styles */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: var(--background-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            z-index: 2;
+        }
+
+        .header .left-buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        .toggle-button, .logout-button, .menu-button {
+            background: var(--toggle-button-background);
+            color: var(--toggle-button-text-color);
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+
+        .toggle-button {
+            margin-right: 0;
+        }
+
+        .toggle-button:hover, .logout-button:hover, .menu-button:hover {
+            background-color: #3700b3;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: var(--modal-content-background);
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            z-index: 3;
+        }
+
+        .sidebar a {
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            color: var(--text-color);
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .close-sidebar {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 36px;
+            cursor: pointer;
+        }
+
+        /* Main content styles */
+        .main-content {
+            transition: margin-left 0.5s;
+            padding: 80px 20px 20px 20px;
+        }
+
+        /* Search bar styles */
+        .search-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .search-container input[type="text"] {
+            width: 80%;
+            max-width: 500px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .search-container button {
+            padding: 10px 20px;
+            background-color: var(--button-background);
+            color: var(--button-text-color);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .search-container button:hover {
+            background-color: #3700b3;
+        }
+
+        /* User profile styles */
+        .user-profile {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .user-profile .user-icon {
+            font-size: 80px;
+            margin-bottom: 10px;
+        }
+
+        .user-profile .follow-stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .follow-stats div {
+            text-align: center;
+        }
+
+        .follow-stats div span {
+            display: block;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .action-button {
+            width: 80%;
+            max-width: 300px;
+            padding: 15px;
+            background-color: var(--button-background);
+            color: var(--button-text-color);
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .action-button:hover {
+            background-color: #3700b3;
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            --background-color: #121212;
+            --text-color: #ffffff;
+            --button-background: #bb86fc;
+            --button-text-color: #000000;
+            --toggle-button-background: #bb86fc;
+            --toggle-button-text-color: #000000;
+            --link-color: #bb86fc;
+            --modal-content-background: #1e1e1e;
+        }
+
+        body.dark-mode .sidebar {
+            background-color: #1e1e1e;
+        }
+
+        body.dark-mode .sidebar a:hover {
+            background-color: #3e3e3e;
+        }
+
+        body.dark-mode .search-container input[type="text"] {
+            background-color: #2e2e2e;
+            color: var(--text-color);
+            border: 1px solid #555;
+        }
+
+        body.dark-mode .search-container button {
+            background-color: #bb86fc;
+            color: #000;
+        }
+
+        body.dark-mode .search-container button:hover {
+            background-color: #9a65e1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="left-buttons">
+            <button class="menu-button" onclick="openSidebar()">☰</button>
+            <button class="logout-button" onclick="logout()">🔓</button>
+        </div>
+        <button class="toggle-button" onclick="toggleDarkMode()" style="margin-right: 25px;">🌙</button>
+    </div>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="close-sidebar" onclick="closeSidebar()">&times;</a>
+        <a href="#">Question Management</a>
+        <a href="#">Leaderboard</a>
+        <a href="#">Main Page</a>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="main-content">
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search users...">
+            <button onclick="searchUsers()">Search</button>
+        </div>
+
+        <!-- User Profile -->
+        <div class="user-profile">
+            <div class="user-icon">👤</div>
+            <div class="follow-stats">
+                <div>
+                    <span id="followingCount">150</span>
+                    Following
+                </div>
+                <div>
+                    <span id="followersCount">200</span>
+                    Followers
+                </div>
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="button-group">
+            <button class="action-button" onclick="goToQuestionManagement()">Question Management</button>
+            <button class="action-button" onclick="goToLeaderboard()">Leaderboard</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        function logout() {
+            // Add your logout logic here
+            alert('Logging out...');
+        }
+
+        function openSidebar() {
+            document.getElementById('sidebar').style.width = 'var(--sidebar-width)';
+            document.getElementById('mainContent').style.marginLeft = 'var(--sidebar-width)';
+        }
+
+        function closeSidebar() {
+            document.getElementById('sidebar').style.width = '0';
+            document.getElementById('mainContent').style.marginLeft = '0';
+        }
+
+        function searchUsers() {
+            var query = document.getElementById('searchInput').value;
+            if (query) {
+                alert('Searching for: ' + query);
+                // Implement search logic here
+            } else {
+                alert('Please enter a search term.');
+            }
+        }
+
+        function goToQuestionManagement() {
+            // Redirect to Question Management Page
+            alert('Navigating to Question Management Page...');
+            // window.location.href = 'question_management.html';
+        }
+
+        function goToLeaderboard() {
+            // Redirect to Leaderboard Page
+            alert('Navigating to Leaderboard Page...');
+            // window.location.href = 'leaderboard.html';
+        }
+
+        // Close sidebar when clicking outside
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('sidebar')) {
+                closeSidebar();
+            }
+        };
+    </script>
+</body>
+</html>
