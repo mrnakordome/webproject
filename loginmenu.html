@@ -78,12 +78,16 @@
         }
 
         #usernameInput {
-            width: 100%;
+            flex: 1; /* Allows the password input to take up available space */
             padding: 10px;
             border: none;
-            outline: none;
+            outline: none; /* Remove the outline */
             box-sizing: border-box;
-            border-radius: 4px; /* Ensure rounded corners match the container */
+            border-radius: 4px 0 0 4px; /* Match border-radius of container */
+            font-size: 18px; /* Make the font larger */
+            height: 40px; /* Adjust height to match container */
+            display: flex; /* Use flex to help align content */
+            align-items: center; /* Vertically center the content */
         }
 
         .password-container {
@@ -103,6 +107,10 @@
             outline: none; /* Remove the outline */
             box-sizing: border-box;
             border-radius: 4px 0 0 4px; /* Match border-radius of container */
+            font-size: 18px; /* Make the font larger */
+            height: 40px; /* Adjust height to match container */
+            display: flex; /* Use flex to help align content */
+            align-items: center; /* Vertically center the content */
         }
 
         .eye-button {
@@ -321,10 +329,8 @@
 
             if (passwordInput.type === "password") {
                 passwordInput.type = "text";
-                eyeIcon.textContent = "🙈"; // Change the icon to "hide" symbol
             } else {
                 passwordInput.type = "password";
-                eyeIcon.textContent = "👁️"; // Change the icon back to "show" symbol
             }
         }
 
