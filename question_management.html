@@ -229,6 +229,35 @@
         .modal-content button:hover {
             background-color: #ec5a32;
         }
+        input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid gray;
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+            background-color: white;
+        }
+
+        /* Style the checkbox when checked */
+        input[type="checkbox"]:checked {
+            border-color: #ec5a32;
+            background-color: #ec5a32;
+        }
+
+        /* Optional: Style for the checkmark (using :after pseudo-element) */
+        input[type="checkbox"]:checked::after {
+            content: "✔";
+            font-size: 14px;
+            color: white;
+            position: absolute;
+            top: 2px;
+            left: 4px;
+        }
 
         .question-list {
             max-height: 300px;
@@ -331,11 +360,11 @@
         body.dark-mode {
             --background-color: #121212;
             --text-color: #ffffff;
-            --button-background: #bb86fc;
+            --button-background: #e07a5f;
             --button-text-color: #000000;
-            --toggle-button-background: #bb86fc;
+            --toggle-button-background: #e07a5f;
             --toggle-button-text-color: #000000;
-            --link-color: #bb86fc;
+            --link-color: #e07a5f;
             --modal-content-background: #1e1e1e;
         }
 
@@ -350,20 +379,30 @@
         }
 
         body.dark-mode .modal-content button {
-            background-color: #bb86fc;
+            background-color: #e07a5f;
             color: #000;
         }
 
         body.dark-mode .modal-content button:hover {
-            background-color: #9a65e1;
+            background-color: #ec5a32;
         }
 
         body.dark-mode .sidebar {
             background-color: #1e1e1e;
         }
+        body.dark-mode input[type="checkbox"] {
+            background-color: #333;
+            border-color: #777;
+        }
+
+        /* Dark mode checked state */
+        body.dark-mode input[type="checkbox"]:checked {
+            background-color: #ec5a32;
+            border-color: #ec5a32;
+        }
 
         body.dark-mode .sidebar a:hover {
-            background-color: #3e3e3e;
+            background-color: #121212;
         }
     </style>
 </head>
