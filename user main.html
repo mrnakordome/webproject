@@ -9,12 +9,14 @@
         :root {
             --background-color: #ede8d0;
             --text-color: #333;
-            --input-background: #f1f1f1;
             --button-background: #e07a5f;
             --button-text-color: #fff;
             --toggle-button-background: #e07a5f;
             --toggle-button-text-color: #fff;
             --link-color: #e07a5f;
+            --modal-background: rgba(0, 0, 0, 0.5);
+            --modal-content-background: #cfccba;
+            --sidebar-width: 250px;
         }
 
         body {
@@ -90,7 +92,7 @@
         }
 
         .sidebar a:hover {
-            background-color: #f1f1f1;
+            background-color: #ede8d0;
         }
 
         .close-sidebar {
@@ -100,6 +102,7 @@
             font-size: 36px;
             cursor: pointer;
         }
+
 
         /* Main content styles */
         .main-content {
@@ -324,7 +327,7 @@
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
         <a href="javascript:void(0)" class="close-sidebar" onclick="closeSidebar()">&times;</a>
-        <a href="#" style="background-color: #f1f1f1">User Main</a>
+        <a href="#" style="background-color: #cec69e">User Main</a>
         <a href="javascript:void(0)" onclick="goToUserQuestionManagement()">Question Management</a>
         <a href="javascript:void(0)" onclick="goToLeaderboard()">Leaderboard</a>
     </div>
