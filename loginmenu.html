@@ -8,14 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         :root {
-            --background-color: #f0f0f0;
+            --background-color: #ede8d0;
             --text-color: #333;
-            --input-background: #fff;
-            --button-background: #6200ee;
+            --input-background: #f1f1f1;
+            --button-background: #e07a5f;
             --button-text-color: #fff;
-            --toggle-button-background: #6200ee;
+            --toggle-button-background: #ec5a32;
             --toggle-button-text-color: #fff;
-            --link-color: #6200ee;
+            --link-color: #ec5a32;
         }
 
         body {
@@ -42,7 +42,7 @@
         }
 
         .toggle-button:hover {
-            background-color: #3700b3;
+            background-color: #ec5a32;
         }
 
         .container {
@@ -151,6 +151,38 @@
         .user-type input {
             margin-right: 5px;
         }
+        input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid gray;
+            border-radius: 50%;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+        }
+
+        /* Default background for the unchecked radio */
+        input[type="radio"]:before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            display: block;
+            background-color: white;
+            border-radius: 50%;
+        }
+
+        /* Purple background when checked */
+        input[type="radio"]:checked {
+            border-color: #ec5a32;
+        }
+
+        /* Purple dot inside when checked */
+        input[type="radio"]:checked:before {
+            background-color: #ec5a32;
+        }
          /* */
         .login-box input[type="text"],
         .login-box input[type="password"] {
@@ -179,7 +211,7 @@
         }
 
         .login-box input[type="submit"]:hover {
-            background-color: #3700b3;
+            background-color: #d64a24;
         }
 
         .register {
