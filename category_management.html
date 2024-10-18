@@ -336,57 +336,58 @@
 </head>
 <body>
     <!-- Header -->
-    <div class="header">
-        <div class="left-buttons">
-            <button class="menu-button" onclick="openSidebar()">☰</button>
-            <button class="logout-button" onclick="logout()">🔓</button>
-        </div>
-        <!-- Dark mode toggle button -->
-        <button class="toggle-button" onclick="toggleDarkMode()">🌙</button>
+<header class="header">
+    <div class="left-buttons">
+        <button class="menu-button" onclick="openSidebar()">☰</button>
+        <button class="logout-button" onclick="logout()">🔓</button>
     </div>
+    <!-- Dark mode toggle button -->
+    <button class="toggle-button" onclick="toggleDarkMode()">🌙</button>
+</header>
 
-    <!-- Sidebar -->
-    <div id="sidebar" class="sidebar">
-        <a href="javascript:void(0)" class="close-sidebar" onclick="closeSidebar()">&times;</a>
-        <a href="javascript:void(0)" onclick="goToAdminMain()">Admin Main Page</a>
-        <a href="javascript:void(0)" onclick="goToQuestionManagement()">Question Management</a>
-        <a href="#" style="background-color: #cec69e">Category Management</a>
-    </div>
+<!-- Sidebar -->
+<aside id="sidebar" class="sidebar">
+    <a href="javascript:void(0)" class="close-sidebar" onclick="closeSidebar()">&times;</a>
+    <a href="javascript:void(0)" onclick="goToAdminMain()">Admin Main Page</a>
+    <a href="javascript:void(0)" onclick="goToQuestionManagement()">Question Management</a>
+    <a href="#" style="background-color: #cec69e">Category Management</a>
+</aside>
 
-    <!-- Main Content -->
-    <div id="mainContent" class="main-content">
-        <div class="container">
-            <h1>Category Management</h1>
-            <div class="button-group">
-                <button class="action-button" onclick="showModal('categoriesModal')">Show Current Categories</button>
-                <button class="action-button" onclick="showModal('addCategoryModal')">Add New Category</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Categories Modal -->
-    <div id="categoriesModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('categoriesModal')">&times;</span>
-            <h2>Select a Category</h2>
-            <select>
-                <option value="">Select Category</option>
-                <option value="math">Math</option>
-                <option value="science">Science</option>
-                <option value="history">History</option>
-            </select>
+<!-- Main Content -->
+<main id="mainContent" class="main-content">
+    <div class="container">
+        <h1>Category Management</h1>
+        <div class="button-group">
+            <button class="action-button" onclick="showModal('categoriesModal')">Show Current Categories</button>
+            <button class="action-button" onclick="showModal('addCategoryModal')">Add New Category</button>
         </div>
     </div>
+</main>
 
-    <!-- Add Category Modal -->
-    <div id="addCategoryModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('addCategoryModal')">&times;</span>
-            <h2>Add New Category</h2>
-            <input type="text" id="newCategoryName" placeholder="Enter category name">
-            <button onclick="addCategory()">Add</button>
-        </div>
+<!-- Categories Modal -->
+<dialog id="categoriesModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('categoriesModal')">&times;</span>
+        <h2>Select a Category</h2>
+        <select>
+            <option value="">Select Category</option>
+            <option value="math">Math</option>
+            <option value="science">Science</option>
+            <option value="history">History</option>
+        </select>
     </div>
+</dialog>
+
+<!-- Add Category Modal -->
+<dialog id="addCategoryModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('addCategoryModal')">&times;</span>
+        <h2>Add New Category</h2>
+        <input type="text" id="newCategoryName" placeholder="Enter category name">
+        <button onclick="addCategory()">Add</button>
+    </div>
+</dialog>
+
 
     <script>
         function toggleDarkMode() {

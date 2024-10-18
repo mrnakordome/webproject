@@ -261,91 +261,91 @@
 </head>
 <body>
     <!-- Header -->
-    <div class="header">
-        <div class="left-buttons">
-            <button class="menu-button" onclick="openSidebar()">☰</button>
-            <button class="logout-button" onclick="logout()">🔓</button>
-        </div>
-        <button class="toggle-button" onclick="toggleDarkMode()">🌙</button>
+<header class="header">
+    <div class="left-buttons">
+        <button class="menu-button" onclick="openSidebar()">☰</button>
+        <button class="logout-button" onclick="logout()">🔓</button>
     </div>
+    <button class="toggle-button" onclick="toggleDarkMode()">🌙</button>
+</header>
 
-    <!-- Sidebar -->
-    <div id="sidebar" class="sidebar">
-        <a href="javascript:void(0)" class="close-sidebar" onclick="closeSidebar()">&times;</a>
-        <a href="#" style="background-color: #cec69e">Admin Main Page</a>
-        <a href="javascript:void(0)" onclick="goToQuestionManagement()">Question Management</a>
-        <a href="javascript:void(0)" onclick="goToCategoryManagement()">Category Management</a>
-    </div>
+<!-- Sidebar -->
+<aside id="sidebar" class="sidebar">
+    <a href="javascript:void(0)" class="close-sidebar" onclick="closeSidebar()">&times;</a>
+    <a href="#" style="background-color: #cec69e">Admin Main Page</a>
+    <a href="javascript:void(0)" onclick="goToQuestionManagement()">Question Management</a>
+    <a href="javascript:void(0)" onclick="goToCategoryManagement()">Category Management</a>
+</aside>
 
-    <!-- Main Content -->
-    <div id="mainContent" class="main-content">
-        <!-- User Profile -->
-        <div class="user-profile">
-            <div class="user-icon">👤</div>
-            <div class="follow-stats">
-                <div>
-                    <span id="followingCount">50</span>
-                    Following
-                </div>
-                <div>
-                    <span id="followersCount">75</span>
-                    Followers
-                </div>
+<!-- Main Content -->
+<main id="mainContent" class="main-content">
+    <!-- User Profile -->
+    <section class="user-profile">
+        <div class="user-icon">👤</div>
+        <div class="follow-stats">
+            <div>
+                <span id="followingCount">50</span>
+                Following
+            </div>
+            <div>
+                <span id="followersCount">75</span>
+                Followers
             </div>
         </div>
+    </section>
 
-        <!-- Buttons -->
-        <div class="button-group">
-            <button class="action-button" onclick="goToQuestionManagement()">Question Management</button>
-            <button class="action-button" onclick="goToCategoryManagement()">Category Management</button>
-        </div>
-    </div>
+    <!-- Buttons -->
+    <section class="button-group">
+        <button class="action-button" onclick="goToQuestionManagement()">Question Management</button>
+        <button class="action-button" onclick="goToCategoryManagement()">Category Management</button>
+    </section>
+</main>
 
-    <script>
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
+<script>
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+    }
+
+    function logout() {
+        // Add your logout logic here
+        alert('Logging out...');
+        window.location.href = 'loginmenu.html';
+    }
+
+    function openSidebar() {
+        document.getElementById('sidebar').style.width = 'var(--sidebar-width)';
+        document.getElementById('mainContent').style.marginLeft = 'var(--sidebar-width)';
+    }
+
+    function closeSidebar() {
+        document.getElementById('sidebar').style.width = '0';
+        document.getElementById('mainContent').style.marginLeft = '0';
+    }
+
+    function goToAdminMain() {
+        // Redirect to admin main Page
+        alert('Navigating to Admin Main Page...');
+        window.location.href = 'admin main.html';
+    }
+
+    function goToQuestionManagement() {
+        // Redirect to Question Management Page
+        alert('Navigating to Question Management Page...');
+        window.location.href = 'question_management.html';
+    }
+
+    function goToCategoryManagement() {
+        // Redirect to Category Management Page
+        alert('Navigating to Category Management Page...');
+        window.location.href = 'category_management.html';
+    }
+
+    // Close sidebar when clicking outside
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('sidebar')) {
+            closeSidebar();
         }
-
-        function logout() {
-            // Add your logout logic here
-            alert('Logging out...');
-            window.location.href = 'loginmenu.html';
-        }
-
-        function openSidebar() {
-            document.getElementById('sidebar').style.width = 'var(--sidebar-width)';
-            document.getElementById('mainContent').style.marginLeft = 'var(--sidebar-width)';
-        }
-
-        function closeSidebar() {
-            document.getElementById('sidebar').style.width = '0';
-            document.getElementById('mainContent').style.marginLeft = '0';
-        }
-        
-        function goToAdminMain() {
-            // Redirect to admin main Page
-            alert('Navigating to Admin Main Page...');
-            window.location.href = 'admin main.html';
-        }
-
-        function goToQuestionManagement() {
-            // Redirect to Question Management Page
-            alert('Navigating to Question Management Page...');
-            window.location.href = 'question_management.html';
-        }
-
-        function goToCategoryManagement() {
-            // Redirect to Category Management Page
-            alert('Navigating to Category Management Page...');
-            window.location.href = 'category_management.html';
-        }
-
-        // Close sidebar when clicking outside
-        window.onclick = function(event) {
-            if (event.target == document.getElementById('sidebar')) {
-                closeSidebar();
-            }
-        };
-    </script>
+    };
+</script>
 </body>
 </html>

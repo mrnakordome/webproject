@@ -369,127 +369,128 @@
 </head>
 <body>
     <!-- Header -->
-    <div class="header">
-        <div class="left-buttons">
-            <button class="menu-button" onclick="openSidebar()">☰</button>
-            <button class="logout-button" onclick="logout()">🔓</button>
+<header class="header">
+    <div class="left-buttons">
+        <button class="menu-button" onclick="openSidebar()">☰</button>
+        <button class="logout-button" onclick="logout()">🔓</button>
+    </div>
+    <button class="toggle-button" onclick="toggleDarkMode()">🌙</button>
+</header>
+
+<!-- Sidebar -->
+<aside id="sidebar" class="sidebar">
+    <a href="javascript:void(0)" class="close-sidebar" onclick="closeSidebar()">&times;</a>
+    <a href="javascript:void(0)" onclick="goToAdminMain()">Admin Main Page</a>
+    <a href="#" style="background-color: #cec69e">Question Management</a>
+    <a href="javascript:void(0)" onclick="goToCategoryManagement()">Category Management</a>
+</aside>
+
+<!-- Main Content -->
+<main id="mainContent" class="main-content">
+    <section class="container">
+        <h1>Question Management</h1>
+        <div class="button-group">
+            <button class="action-button" onclick="showModal('myQuestionsModal')">Show My Questions</button>
+            <button class="action-button" onclick="showModal('addQuestionModal')">Add New Question</button>
         </div>
-        <button class="toggle-button" onclick="toggleDarkMode()">🌙</button>
-    </div>
+    </section>
+</main>
 
-    <!-- Sidebar -->
-    <div id="sidebar" class="sidebar">
-        <a href="javascript:void(0)" class="close-sidebar" onclick="closeSidebar()">&times;</a>
-        <a href="javascript:void(0)" onclick="goToAdminMain()">Admin Main Page</a>
-        <a href="#" style="background-color: #cec69e">Question Management</a>
-        <a href="javascript:void(0)" onclick="goToCategoryManagement()">Category Management</a>
-    </div>
-
-    <!-- Main Content -->
-    <div id="mainContent" class="main-content">
-        <div class="container">
-            <h1>Question Management</h1>
-            <div class="button-group">
-                <button class="action-button" onclick="showModal('myQuestionsModal')">Show My Questions</button>
-                <button class="action-button" onclick="showModal('addQuestionModal')">Add New Question</button>
+<!-- My Questions Modal -->
+<dialog id="myQuestionsModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('myQuestionsModal')">&times;</span>
+        <h2>My Questions</h2>
+        <div class="question-list">
+            <!-- Sample Questions -->
+            <div class="question-item">
+                <strong>Question 1:</strong> What is the capital of France?
             </div>
-        </div>
-    </div>
-
-    <!-- My Questions Modal -->
-    <div id="myQuestionsModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('myQuestionsModal')">&times;</span>
-            <h2>My Questions</h2>
-            <div class="question-list">
-                <!-- Sample Questions -->
-                <div class="question-item">
-                    <strong>Question 1:</strong> What is the capital of France?
-                </div>
-                <div class="question-item">
-                    <strong>Question 2:</strong> Who wrote 'Hamlet'?
-                </div>
-                <div class="question-item">
-                    <strong>Question 3:</strong> What is the chemical symbol for water?
-                </div>
-                <!-- Add more questions as needed -->
+            <div class="question-item">
+                <strong>Question 2:</strong> Who wrote 'Hamlet'?
             </div>
-        </div>
-    </div>
-
-    <!-- Add Question Modal -->
-    <div id="addQuestionModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('addQuestionModal')">&times;</span>
-            <h2>Add New Question</h2>
-            <form id="addQuestionForm">
-                <label for="questionText">Question Text:</label>
-                <textarea id="questionText" rows="3" placeholder="Enter your question here"></textarea>
-
-                <label for="optionA">Option A:</label>
-                <input type="text" id="optionA" placeholder="Enter option A">
-
-                <label for="optionB">Option B:</label>
-                <input type="text" id="optionB" placeholder="Enter option B">
-
-                <label for="optionC">Option C:</label>
-                <input type="text" id="optionC" placeholder="Enter option C">
-
-                <label for="optionD">Option D:</label>
-                <input type="text" id="optionD" placeholder="Enter option D">
-
-                <label for="correctAnswer">Correct Answer:</label>
-                <select id="correctAnswer">
-                    <option value="">Select the correct answer</option>
-                    <option value="A">Option A</option>
-                    <option value="B">Option B</option>
-                    <option value="C">Option C</option>
-                    <option value="D">Option D</option>
-                </select>
-
-                <label for="category">Category:</label>
-                <select id="category">
-                    <option value="">Select Category</option>
-                    <option value="math">Math</option>
-                    <option value="science">Science</option>
-                    <option value="history">History</option>
-                    <!-- Add more categories as needed -->
-                </select>
-
-                <label for="difficulty">Difficulty Level:</label>
-                <input type="number" id="difficulty" min="1" max="10" placeholder="Enter difficulty level (1-10)">
-
-                <button type="button" onclick="chooseRelatedQuestions()">Choose Related Questions</button>
-
-                <button type="button" onclick="submitQuestion()">Submit Question</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Related Questions Modal -->
-    <div id="relatedQuestionsModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('relatedQuestionsModal')">&times;</span>
-            <h2>Choose Related Questions</h2>
-            <div class="question-list">
-                <!-- Sample Related Questions -->
-                <div class="question-item">
-                    <input type="checkbox" id="related1">
-                    <label for="related1">What is 2 + 2?</label>
-                </div>
-                <div class="question-item">
-                    <input type="checkbox" id="related2">
-                    <label for="related2">Explain Newton's Second Law.</label>
-                </div>
-                <div class="question-item">
-                    <input type="checkbox" id="related3">
-                    <label for="related3">Describe the events of World War II.</label>
-                </div>
-                <!-- Add more related questions as needed -->
+            <div class="question-item">
+                <strong>Question 3:</strong> What is the chemical symbol for water?
             </div>
-            <button type="button" onclick="closeModal('relatedQuestionsModal')">Done</button>
+            <!-- Add more questions as needed -->
         </div>
     </div>
+</dialog>
+
+<!-- Add Question Modal -->
+<dialog id="addQuestionModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('addQuestionModal')">&times;</span>
+        <h2>Add New Question</h2>
+        <form id="addQuestionForm">
+            <label for="questionText">Question Text:</label>
+            <textarea id="questionText" rows="3" placeholder="Enter your question here"></textarea>
+
+            <label for="optionA">Option A:</label>
+            <input type="text" id="optionA" placeholder="Enter option A">
+
+            <label for="optionB">Option B:</label>
+            <input type="text" id="optionB" placeholder="Enter option B">
+
+            <label for="optionC">Option C:</label>
+            <input type="text" id="optionC" placeholder="Enter option C">
+
+            <label for="optionD">Option D:</label>
+            <input type="text" id="optionD" placeholder="Enter option D">
+
+            <label for="correctAnswer">Correct Answer:</label>
+            <select id="correctAnswer">
+                <option value="">Select the correct answer</option>
+                <option value="A">Option A</option>
+                <option value="B">Option B</option>
+                <option value="C">Option C</option>
+                <option value="D">Option D</option>
+            </select>
+
+            <label for="category">Category:</label>
+            <select id="category">
+                <option value="">Select Category</option>
+                <option value="math">Math</option>
+                <option value="science">Science</option>
+                <option value="history">History</option>
+                <!-- Add more categories as needed -->
+            </select>
+
+            <label for="difficulty">Difficulty Level:</label>
+            <input type="number" id="difficulty" min="1" max="10" placeholder="Enter difficulty level (1-10)">
+
+            <button type="button" onclick="chooseRelatedQuestions()">Choose Related Questions</button>
+
+            <button type="button" onclick="submitQuestion()">Submit Question</button>
+        </form>
+    </div>
+</dialog>
+
+<!-- Related Questions Modal -->
+<dialog id="relatedQuestionsModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('relatedQuestionsModal')">&times;</span>
+        <h2>Choose Related Questions</h2>
+        <div class="question-list">
+            <!-- Sample Related Questions -->
+            <div class="question-item">
+                <input type="checkbox" id="related1">
+                <label for="related1">What is 2 + 2?</label>
+            </div>
+            <div class="question-item">
+                <input type="checkbox" id="related2">
+                <label for="related2">Explain Newton's Second Law.</label>
+            </div>
+            <div class="question-item">
+                <input type="checkbox" id="related3">
+                <label for="related3">Describe the events of World War II.</label>
+            </div>
+            <!-- Add more related questions as needed -->
+        </div>
+        <button type="button" onclick="closeModal('relatedQuestionsModal')">Done</button>
+    </div>
+</dialog>
+
 
     <script>
         function toggleDarkMode() {

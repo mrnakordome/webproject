@@ -244,85 +244,86 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <div class="header">
-        <div class="left-buttons">
-            <button class="menu-button" onclick="openSidebar()">☰</button>
-            <button class="logout-button" onclick="logout()">🔓</button>
-        </div>
-        <button class="toggle-button" onclick="toggleDarkMode()">🌙</button>
+<!-- Header -->
+<header class="header">
+    <div class="left-buttons">
+        <button class="menu-button" onclick="openSidebar()">☰</button>
+        <button class="logout-button" onclick="logout()">🔓</button>
     </div>
+    <button class="toggle-button" onclick="toggleDarkMode()">🌙</button>
+</header>
 
-    <!-- Sidebar -->
-    <div id="sidebar" class="sidebar">
-        <a href="javascript:void(0)" class="close-sidebar" onclick="closeSidebar()">&times;</a>
-        <a href="javascript:void(0)" onclick="goToUserMain()">User Main</a>
-        <a href="javascript:void(0)" onclick="goToUserQuestionManagement()">Question Management</a>
-        <a href="#" style="background-color: #f1f1f1">Leaderboard</a>
-    </div>
+<!-- Sidebar -->
+<aside id="sidebar" class="sidebar">
+    <a href="javascript:void(0)" class="close-sidebar" onclick="closeSidebar()">&times;</a>
+    <a href="javascript:void(0)" onclick="goToUserMain()">User Main</a>
+    <a href="javascript:void(0)" onclick="goToUserQuestionManagement()">Question Management</a>
+    <a href="#" style="background-color: #f1f1f1">Leaderboard</a>
+</aside>
 
-    <!-- Main Content -->
-    <div id="mainContent" class="main-content">
-        <div class="leaderboard-container">
-            <h1 class="leaderboard-title">Leaderboard</h1>
-            <table class="leaderboard-table">
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>Player</th>
-                        <th>Score</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Top 3 Players with Trophy Icons -->
-                    <tr class="top-player">
-                        <td>1 <span class="trophy">🥇</span></td>
-                        <td>Alice</td>
-                        <td>1500</td>
-                    </tr>
-                    <tr class="top-player">
-                        <td>2 <span class="trophy">🥈</span></td>
-                        <td>Bob</td>
-                        <td>1400</td>
-                    </tr>
-                    <tr class="top-player">
-                        <td>3 <span class="trophy">🥉</span></td>
-                        <td>Charlie</td>
-                        <td>1300</td>
-                    </tr>
-                    <!-- Other Players -->
-                    <tr>
-                        <td>4</td>
-                        <td>David</td>
-                        <td>1200</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Emma</td>
-                        <td>1100</td>
-                    </tr>
-                    <!-- Current User Highlighted -->
-                    <tr style="background-color: #e0e0e0;">
-                        <td>6</td>
-                        <td>You</td>
-                        <td>1000</td>
-                    </tr>
-                    <!-- More Players -->
-                    <tr>
-                        <td>7</td>
-                        <td>Frank</td>
-                        <td>900</td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>Grace</td>
-                        <td>800</td>
-                    </tr>
-                    <!-- Add more players as needed -->
-                </tbody>
-            </table>
-        </div>
-    </div>
+<!-- Main Content -->
+<main id="mainContent" class="main-content">
+    <section class="leaderboard-container">
+        <h1 class="leaderboard-title">Leaderboard</h1>
+        <table class="leaderboard-table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Player</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Top 3 Players with Trophy Icons -->
+                <tr class="top-player">
+                    <td>1 <span class="trophy">🥇</span></td>
+                    <td>Alice</td>
+                    <td>1500</td>
+                </tr>
+                <tr class="top-player">
+                    <td>2 <span class="trophy">🥈</span></td>
+                    <td>Bob</td>
+                    <td>1400</td>
+                </tr>
+                <tr class="top-player">
+                    <td>3 <span class="trophy">🥉</span></td>
+                    <td>Charlie</td>
+                    <td>1300</td>
+                </tr>
+                <!-- Other Players -->
+                <tr>
+                    <td>4</td>
+                    <td>David</td>
+                    <td>1200</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Emma</td>
+                    <td>1100</td>
+                </tr>
+                <!-- Current User Highlighted -->
+                <tr style="background-color: #e0e0e0;">
+                    <td>6</td>
+                    <td>You</td>
+                    <td>1000</td>
+                </tr>
+                <!-- More Players -->
+                <tr>
+                    <td>7</td>
+                    <td>Frank</td>
+                    <td>900</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>Grace</td>
+                    <td>800</td>
+                </tr>
+                <!-- Add more players as needed -->
+            </tbody>
+        </table>
+    </section>
+</main>
+
 
     <script>
         function toggleDarkMode() {
