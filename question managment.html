@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Question Management</title>
+    <!-- Responsive Meta Tag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --background-color: #f0f0f0;
+            --text-color: #333;
+            --button-background: #6200ee;
+            --button-text-color: #fff;
+            --toggle-button-background: #6200ee;
+            --toggle-button-text-color: #fff;
+            --link-color: #6200ee;
+            --modal-background: rgba(0, 0, 0, 0.5);
+            --modal-content-background: #fff;
+            --sidebar-width: 250px;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
+        }
+
+        /* Header styles */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: var(--background-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 15px;
+            z-index: 2;
+            box-sizing: border-box;
+        }
+
+        .header .left-buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        .toggle-button, .logout-button, .menu-button {
+            background: var(--toggle-button-background);
+            color: var(--toggle-button-text-color);
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+
+        .toggle-button {
+            margin-right: 0;
+        }
+
+        .toggle-button:hover, .logout-button:hover, .menu-button:hover {
+            background-color: #3700b3;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: var(--modal-content-background);
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            z-index: 3;
+            box-sizing: border-box;
+        }
+
+        .sidebar a {
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 1em;
+            color: var(--text-color);
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .close-sidebar {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 36px;
+            cursor: pointer;
+        }
+
+        /* Main content styles */
+        .main-content {
+            transition: margin-left 0.5s;
+            padding: 80px 20px;
+            box-sizing: border-box;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center vertically */
+            align-items: center;    /* Center horizontally */
+        }
+
+        .container {
+            text-align: center;
+            width: 100%;
+        }
+
+        .container h1 {
+            margin-bottom: 40px;
+            font-weight: normal;
+            font-size: 2em;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .action-button {
+            padding: 15px 30px;
+            background-color: var(--button-background);
+            color: var(--button-text-color);
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .action-button:hover {
+            background-color: #3700b3;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 4;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: var(--modal-background);
+        }
+
+        .modal-content {
+            background-color: var(--modal-content-background);
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 700px;
+            border-radius: 4px;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .close {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .modal-content h2 {
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+
+        .modal-content textarea, .modal-content input[type="text"], .modal-content select, .modal-content input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        .modal-content label {
+            margin-top: 15px;
+            display: block;
+            font-weight: bold;
+            font-size: 1em;
+        }
+
+        .modal-content button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: var(--button-background);
+            color: var(--button-text-color);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        .modal-content button:hover {
+            background-color: #3700b3;
+        }
+
+        .question-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+
+        .question-item {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            font-size: 1em;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .toggle-button, .logout-button, .menu-button {
+                padding: 8px;
+                font-size: 1em;
+            }
+
+            .header {
+                padding: 10px 15px;
+            }
+
+            .container h1 {
+                font-size: 1.8em;
+            }
+
+            .action-button {
+                padding: 12px 25px;
+                font-size: 0.9em;
+            }
+
+            .modal-content h2 {
+                font-size: 1.4em;
+            }
+
+            .modal-content label {
+                font-size: 0.9em;
+            }
+
+            .modal-content input, .modal-content select, .modal-content textarea, .modal-content button {
+                font-size: 0.9em;
+            }
+
+            .question-item {
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .toggle-button, .logout-button, .menu-button {
+                padding: 6px;
+                font-size: 0.9em;
+            }
+
+            .header {
+                padding: 8px 10px;
+            }
+
+            .container h1 {
+                font-size: 1.5em;
+            }
+
+            .action-button {
+                width: 100%;
+                max-width: none;
+                padding: 10px;
+                font-size: 0.85em;
+            }
+
+            .button-group {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .modal-content {
+                margin: 10% auto;
+                padding: 15px;
+            }
+
+            .modal-content h2 {
+                font-size: 1.2em;
+            }
+
+            .modal-content label {
+                font-size: 0.85em;
+            }
+
+            .modal-content input, .modal-content select, .modal-content textarea, .modal-content button {
+                font-size: 0.85em;
+            }
+
+            .question-item {
+                font-size: 0.85em;
+            }
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            --background-color: #121212;
+            --text-color: #ffffff;
+            --button-background: #bb86fc;
+            --button-text-color: #000000;
+            --toggle-button-background: #bb86fc;
+            --toggle-button-text-color: #000000;
+            --link-color: #bb86fc;
+            --modal-content-background: #1e1e1e;
+        }
+
+        body.dark-mode .modal-content {
+            color: var(--text-color);
+        }
+
+        body.dark-mode .modal-content input, body.dark-mode .modal-content textarea, body.dark-mode .modal-content select {
+            background-color: #2e2e2e;
+            color: var(--text-color);
+            border: 1px solid #555;
+        }
+
+        body.dark-mode .modal-content button {
+            background-color: #bb86fc;
+            color: #000;
+        }
+
+        body.dark-mode .modal-content button:hover {
+            background-color: #9a65e1;
+        }
+
+        body.dark-mode .sidebar {
+            background-color: #1e1e1e;
+        }
+
+        body.dark-mode .sidebar a:hover {
+            background-color: #3e3e3e;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="left-buttons">
+            <button class="menu-button" onclick="openSidebar()">☰</button>
+            <button class="logout-button" onclick="logout()">🔓</button>
+        </div>
+        <button class="toggle-button" onclick="toggleDarkMode()">🌙</button>
+    </div>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="close-sidebar" onclick="closeSidebar()">&times;</a>
+        <a href="#">User Dashboard</a>
+        <a href="#">Leaderboard</a>
+        <a href="#">Main Page</a>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="main-content">
+        <div class="container">
+            <h1>Question Management</h1>
+            <div class="button-group">
+                <button class="action-button" onclick="showModal('myQuestionsModal')">Show My Questions</button>
+                <button class="action-button" onclick="showModal('addQuestionModal')">Add New Question</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- My Questions Modal -->
+    <div id="myQuestionsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('myQuestionsModal')">&times;</span>
+            <h2>My Questions</h2>
+            <div class="question-list">
+                <!-- Sample Questions -->
+                <div class="question-item">
+                    <strong>Question 1:</strong> What is the capital of France?
+                </div>
+                <div class="question-item">
+                    <strong>Question 2:</strong> Who wrote 'Hamlet'?
+                </div>
+                <div class="question-item">
+                    <strong>Question 3:</strong> What is the chemical symbol for water?
+                </div>
+                <!-- Add more questions as needed -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Question Modal -->
+    <div id="addQuestionModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addQuestionModal')">&times;</span>
+            <h2>Add New Question</h2>
+            <form id="addQuestionForm">
+                <label for="questionText">Question Text:</label>
+                <textarea id="questionText" rows="3" placeholder="Enter your question here"></textarea>
+
+                <label for="optionA">Option A:</label>
+                <input type="text" id="optionA" placeholder="Enter option A">
+
+                <label for="optionB">Option B:</label>
+                <input type="text" id="optionB" placeholder="Enter option B">
+
+                <label for="optionC">Option C:</label>
+                <input type="text" id="optionC" placeholder="Enter option C">
+
+                <label for="optionD">Option D:</label>
+                <input type="text" id="optionD" placeholder="Enter option D">
+
+                <label for="correctAnswer">Correct Answer:</label>
+                <select id="correctAnswer">
+                    <option value="">Select the correct answer</option>
+                    <option value="A">Option A</option>
+                    <option value="B">Option B</option>
+                    <option value="C">Option C</option>
+                    <option value="D">Option D</option>
+                </select>
+
+                <label for="category">Category:</label>
+                <select id="category">
+                    <option value="">Select Category</option>
+                    <option value="math">Math</option>
+                    <option value="science">Science</option>
+                    <option value="history">History</option>
+                    <!-- Add more categories as needed -->
+                </select>
+
+                <label for="difficulty">Difficulty Level:</label>
+                <input type="number" id="difficulty" min="1" max="10" placeholder="Enter difficulty level (1-10)">
+
+                <button type="button" onclick="chooseRelatedQuestions()">Choose Related Questions</button>
+
+                <button type="button" onclick="submitQuestion()">Submit Question</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Related Questions Modal -->
+    <div id="relatedQuestionsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('relatedQuestionsModal')">&times;</span>
+            <h2>Choose Related Questions</h2>
+            <div class="question-list">
+                <!-- Sample Related Questions -->
+                <div class="question-item">
+                    <input type="checkbox" id="related1">
+                    <label for="related1">What is 2 + 2?</label>
+                </div>
+                <div class="question-item">
+                    <input type="checkbox" id="related2">
+                    <label for="related2">Explain Newton's Second Law.</label>
+                </div>
+                <div class="question-item">
+                    <input type="checkbox" id="related3">
+                    <label for="related3">Describe the events of World War II.</label>
+                </div>
+                <!-- Add more related questions as needed -->
+            </div>
+            <button type="button" onclick="closeModal('relatedQuestionsModal')">Done</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        function logout() {
+            // Add your logout logic here
+            alert('Logging out...');
+        }
+
+        function openSidebar() {
+            document.getElementById('sidebar').style.width = 'var(--sidebar-width)';
+            document.getElementById('mainContent').style.marginLeft = 'var(--sidebar-width)';
+        }
+
+        function closeSidebar() {
+            document.getElementById('sidebar').style.width = '0';
+            document.getElementById('mainContent').style.marginLeft = '0';
+        }
+
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function chooseRelatedQuestions() {
+            showModal('relatedQuestionsModal');
+        }
+
+        function submitQuestion() {
+            var questionText = document.getElementById('questionText').value;
+            var optionA = document.getElementById('optionA').value;
+            var optionB = document.getElementById('optionB').value;
+            var optionC = document.getElementById('optionC').value;
+            var optionD = document.getElementById('optionD').value;
+            var correctAnswer = document.getElementById('correctAnswer').value;
+            var category = document.getElementById('category').value;
+            var difficulty = document.getElementById('difficulty').value;
+
+            if (questionText && optionA && optionB && optionC && optionD && correctAnswer && category && difficulty) {
+                alert('Question submitted successfully!');
+                document.getElementById('addQuestionForm').reset();
+                closeModal('addQuestionModal');
+            } else {
+                alert('Please fill in all fields.');
+            }
+        }
+
+        // Close modals and sidebar when clicking outside
+        window.onclick = function(event) {
+            var modals = document.getElementsByClassName('modal');
+            var sidebar = document.getElementById('sidebar');
+            if (event.target == sidebar) {
+                closeSidebar();
+            }
+            for (var i = 0; i < modals.length; i++) {
+                if (event.target == modals[i]) {
+                    modals[i].style.display = "none";
+                }
+            }
+        };
+    </script>
+</body>
+</html>

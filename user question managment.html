@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <!-- Responsive Meta Tag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --background-color: #f0f0f0;
+            --text-color: #333;
+            --button-background: #6200ee;
+            --button-text-color: #fff;
+            --toggle-button-background: #6200ee;
+            --toggle-button-text-color: #fff;
+            --link-color: #6200ee;
+            --modal-background: rgba(0, 0, 0, 0.5);
+            --modal-content-background: #fff;
+            --sidebar-width: 250px;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden; /* Prevent horizontal scroll when sidebar is open */
+        }
+
+        /* Header styles */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: var(--background-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 15px;
+            z-index: 2;
+            box-sizing: border-box;
+        }
+
+        .header .left-buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        .toggle-button, .logout-button, .menu-button {
+            background: var(--toggle-button-background);
+            color: var(--toggle-button-text-color);
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+
+        .toggle-button {
+            margin-right: 0;
+        }
+
+        .toggle-button:hover, .logout-button:hover, .menu-button:hover {
+            background-color: #3700b3;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            height: 100%;
+            width: 0; /* Sidebar is hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: var(--modal-content-background);
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            z-index: 3;
+            box-sizing: border-box;
+        }
+
+        .sidebar a {
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 1em;
+            color: var(--text-color);
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .close-sidebar {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 36px;
+            cursor: pointer;
+        }
+
+        /* Main content styles */
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: margin-left 0.5s;
+            padding: 80px 20px;
+            box-sizing: border-box;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .container h1 {
+            margin-bottom: 40px;
+            font-weight: normal;
+            font-size: 2em;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .action-button {
+            padding: 15px 30px;
+            background-color: var(--button-background);
+            color: var(--button-text-color);
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            text-align: center;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+
+        .action-button:hover {
+            background-color: #3700b3;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 4; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: var(--modal-background);
+        }
+
+        .modal-content {
+            background-color: var(--modal-content-background);
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 4px;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .close {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .modal-content h2 {
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+
+        .modal-content select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        .modal-content button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            margin-left: 5px;  /* Adds spacing to the left */
+            margin-right: 5px;
+            background-color: var(--button-background);
+            color: var(--button-text-color);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        .modal-content button:hover {
+            background-color: #3700b3;
+        }
+
+        .history-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+
+        .history-item {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            font-size: 1em;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .toggle-button, .logout-button, .menu-button {
+                padding: 8px;
+                font-size: 1em;
+            }
+
+            .header {
+                padding: 10px 15px;
+            }
+
+            .container h1 {
+                font-size: 1.8em;
+            }
+
+            .action-button {
+                padding: 12px 25px;
+                font-size: 0.9em;
+            }
+
+            .modal-content h2 {
+                font-size: 1.4em;
+            }
+
+            .modal-content button {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+
+            .modal-content select {
+                font-size: 0.9em;
+            }
+
+            .history-item {
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .toggle-button, .logout-button, .menu-button {
+                padding: 6px;
+                font-size: 0.9em;
+            }
+
+            .header {
+                padding: 8px 10px;
+            }
+
+            .container h1 {
+                font-size: 1.5em;
+            }
+
+            .action-button {
+                width: 100%;
+                max-width: none;
+                padding: 10px;
+                font-size: 0.85em;
+            }
+
+            .button-group {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .modal-content {
+                margin: 15% auto;
+                padding: 15px;
+            }
+
+            .modal-content h2 {
+                font-size: 1.2em;
+            }
+
+            .modal-content button {
+                padding: 8px 12px;
+                font-size: 0.85em;
+            }
+
+            .modal-content select {
+                font-size: 0.85em;
+            }
+
+            .history-item {
+                font-size: 0.85em;
+            }
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            --background-color: #121212;
+            --text-color: #ffffff;
+            --button-background: #bb86fc;
+            --button-text-color: #000000;
+            --toggle-button-background: #bb86fc;
+            --toggle-button-text-color: #000000;
+            --link-color: #bb86fc;
+            --modal-content-background: #1e1e1e;
+        }
+
+        body.dark-mode .modal-content {
+            color: var(--text-color);
+        }
+
+        body.dark-mode .modal-content select {
+            background-color: #2e2e2e;
+            color: var(--text-color);
+            border: 1px solid #555;
+        }
+
+        body.dark-mode .modal-content button {
+            background-color: #bb86fc;
+            color: #000;
+        }
+
+        body.dark-mode .modal-content button:hover {
+            background-color: #9a65e1;
+        }
+
+        body.dark-mode .sidebar {
+            background-color: #1e1e1e;
+        }
+
+        body.dark-mode .sidebar a:hover {
+            background-color: #3e3e3e;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="left-buttons">
+            <button class="menu-button" onclick="openSidebar()">☰</button>
+            <button class="logout-button" onclick="logout()">🔓</button>
+        </div>
+        <button class="toggle-button" onclick="toggleDarkMode()">🌙</button>
+    </div>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="close-sidebar" onclick="closeSidebar()">&times;</a>
+        <a href="#">Leaderboard</a>
+        <a href="#">User Dashboard</a>
+        <a href="#">Main Page</a>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="main-content">
+        <div class="container">
+            <h1>Welcome, User</h1>
+            <div class="button-group">
+                <button class="action-button" onclick="showModal('answerQuestionModal')">Answer a New Question</button>
+                <button class="action-button" onclick="showModal('questionHistoryModal')">My Question History</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Answer Question Modal -->
+    <div id="answerQuestionModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('answerQuestionModal')">&times;</span>
+            <h2>Choose How to Answer</h2>
+            <button onclick="startRandomQuestion()">Random Category</button>
+            <button onclick="showCategorySelection()">Choose Category</button>
+            <!-- Category Selection -->
+            <div id="categorySelection" style="display: none; margin-top: 20px;">
+                <select id="categorySelect">
+                    <option value="">Select Category</option>
+                    <option value="math">Math</option>
+                    <option value="science">Science</option>
+                    <option value="history">History</option>
+                    <!-- Add more categories as needed -->
+                </select>
+                <button style="margin-top: 10px;" onclick="startCategoryQuestion()">Start</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Question History Modal -->
+    <div id="questionHistoryModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('questionHistoryModal')">&times;</span>
+            <h2>My Question History</h2>
+            <div class="history-list">
+                <!-- Sample History Items -->
+                <div class="history-item">
+                    <strong>Question:</strong> What is the capital of Spain?<br>
+                    <strong>Your Answer:</strong> Madrid<br>
+                    <strong>Correct Answer:</strong> Madrid
+                </div>
+                <div class="history-item">
+                    <strong>Question:</strong> Who painted the Mona Lisa?<br>
+                    <strong>Your Answer:</strong> Vincent van Gogh<br>
+                    <strong>Correct Answer:</strong> Leonardo da Vinci
+                </div>
+                <!-- Add more history items as needed -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Placeholder for Question Modal -->
+    <div id="questionModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('questionModal')">&times;</span>
+            <h2 id="questionText">Question goes here</h2>
+            <div class="options">
+                <button onclick="submitAnswer('A')">Option A</button>
+                <button onclick="submitAnswer('B')">Option B</button>
+                <button onclick="submitAnswer('C')">Option C</button>
+                <button onclick="submitAnswer('D')">Option D</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        function logout() {
+            // Add your logout logic here
+            alert('Logging out...');
+        }
+
+        function openSidebar() {
+            document.getElementById('sidebar').style.width = 'var(--sidebar-width)';
+            document.getElementById('mainContent').style.marginLeft = 'var(--sidebar-width)';
+        }
+
+        function closeSidebar() {
+            document.getElementById('sidebar').style.width = '0';
+            document.getElementById('mainContent').style.marginLeft = '0';
+        }
+
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            if (modalId === 'answerQuestionModal') {
+                document.getElementById('categorySelection').style.display = 'none';
+            }
+        }
+
+        function showCategorySelection() {
+            document.getElementById('categorySelection').style.display = 'block';
+        }
+
+        function startRandomQuestion() {
+            // Implement logic to fetch a random question
+            alert('Starting a random question...');
+            closeModal('answerQuestionModal');
+            // For demonstration, show the question modal
+            showQuestionModal('What is 2 + 2?', ['3', '4', '5', '6']);
+        }
+
+        function startCategoryQuestion() {
+            var category = document.getElementById('categorySelect').value;
+            if (category) {
+                alert('Starting a question in category: ' + category);
+                closeModal('answerQuestionModal');
+                // For demonstration, show the question modal
+                showQuestionModal('What is the square root of 16?', ['2', '3', '4', '5']);
+            } else {
+                alert('Please select a category.');
+            }
+        }
+
+        function showQuestionModal(questionText, options) {
+            document.getElementById('questionText').innerText = questionText;
+            var optionsContainer = document.querySelector('.modal-content .options');
+            optionsContainer.innerHTML = '';
+            options.forEach(function(option, index) {
+                var button = document.createElement('button');
+                button.innerText = 'Option ' + String.fromCharCode(65 + index) + ': ' + option;
+                button.onclick = function() { submitAnswer(String.fromCharCode(65 + index)); };
+                optionsContainer.appendChild(button);
+            });
+            showModal('questionModal');
+        }
+
+        function submitAnswer(selectedOption) {
+            alert('You selected: ' + selectedOption);
+            // Implement logic to check answer and update history
+            closeModal('questionModal');
+        }
+
+        // Close modals and sidebar when clicking outside
+        window.onclick = function(event) {
+            var modals = document.getElementsByClassName('modal');
+            var sidebar = document.getElementById('sidebar');
+            if (event.target == sidebar) {
+                closeSidebar();
+            }
+            for (var i = 0; i < modals.length; i++) {
+                if (event.target == modals[i]) {
+                    modals[i].style.display = "none";
+                    if (modals[i].id === 'answerQuestionModal') {
+                        document.getElementById('categorySelection').style.display = 'none';
+                    }
+                }
+            }
+        };
+    </script>
+</body>
+</html>
