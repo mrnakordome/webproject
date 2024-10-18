@@ -316,51 +316,52 @@
 </head>
 <body>
     <!-- Header -->
-    <div class="header">
-        <div class="left-buttons">
-            <button class="menu-button" onclick="openSidebar()">☰</button>
-            <button class="logout-button" onclick="logout()">🔓</button>
-        </div>
-        <button class="toggle-button" onclick="toggleDarkMode()">🌙</button>
+<header class="header">
+    <div class="left-buttons">
+        <button class="menu-button" onclick="openSidebar()">☰</button>
+        <button class="logout-button" onclick="logout()">🔓</button>
     </div>
+    <button class="toggle-button" onclick="toggleDarkMode()">🌙</button>
+</header>
 
-    <!-- Sidebar -->
-    <div id="sidebar" class="sidebar">
-        <a href="javascript:void(0)" class="close-sidebar" onclick="closeSidebar()">&times;</a>
-        <a href="#" style="background-color: #cec69e">User Main</a>
-        <a href="javascript:void(0)" onclick="goToUserQuestionManagement()">Question Management</a>
-        <a href="javascript:void(0)" onclick="goToLeaderboard()">Leaderboard</a>
-    </div>
+<!-- Sidebar -->
+<aside id="sidebar" class="sidebar">
+    <a href="javascript:void(0)" class="close-sidebar" onclick="closeSidebar()">&times;</a>
+    <a href="#" style="background-color: #cec69e">User Main</a>
+    <a href="javascript:void(0)" onclick="goToUserQuestionManagement()">Question Management</a>
+    <a href="javascript:void(0)" onclick="goToLeaderboard()">Leaderboard</a>
+</aside>
 
-    <!-- Main Content -->
-    <div id="mainContent" class="main-content">
-        <!-- Search Bar -->
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search users...">
-            <button onclick="searchUsers()">Search</button>
-        </div>
+<!-- Main Content -->
+<main id="mainContent" class="main-content">
+    <!-- Search Bar -->
+    <section class="search-container">
+        <input type="text" id="searchInput" placeholder="Search users...">
+        <button onclick="searchUsers()">Search</button>
+    </section>
 
-        <!-- User Profile -->
-        <div class="user-profile">
-            <div class="user-icon">👤</div>
-            <div class="follow-stats">
-                <div>
-                    <span id="followingCount">150</span>
-                    Following
-                </div>
-                <div>
-                    <span id="followersCount">200</span>
-                    Followers
-                </div>
+    <!-- User Profile -->
+    <section class="user-profile">
+        <div class="user-icon">👤</div>
+        <div class="follow-stats">
+            <div>
+                <span id="followingCount">150</span>
+                Following
+            </div>
+            <div>
+                <span id="followersCount">200</span>
+                Followers
             </div>
         </div>
+    </section>
 
-        <!-- Buttons -->
-        <div class="button-group">
-            <button class="action-button" onclick="goToUserQuestionManagement()">Question Management</button>
-            <button class="action-button" onclick="goToLeaderboard()">Leaderboard</button>
-        </div>
-    </div>
+    <!-- Buttons -->
+    <section class="button-group">
+        <button class="action-button" onclick="goToUserQuestionManagement()">Question Management</button>
+        <button class="action-button" onclick="goToLeaderboard()">Leaderboard</button>
+    </section>
+</main>
+
 
     <script>
         function toggleDarkMode() {

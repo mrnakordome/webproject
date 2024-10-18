@@ -364,90 +364,90 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <div class="header">
-        <div class="left-buttons">
-            <button class="menu-button" onclick="openSidebar()">☰</button>
-            <button class="logout-button" onclick="logout()">🔓</button>
+<!-- Header -->
+<header class="header">
+    <div class="left-buttons">
+        <button class="menu-button" onclick="openSidebar()">☰</button>
+        <button class="logout-button" onclick="logout()">🔓</button>
+    </div>
+    <button class="toggle-button" onclick="toggleDarkMode()">🌙</button>
+</header>
+
+<!-- Sidebar -->
+<aside id="sidebar" class="sidebar">
+    <a href="javascript:void(0)" class="close-sidebar" onclick="closeSidebar()">&times;</a>
+    <a href="javascript:void(0)" onclick="goToUserMain()">User Main</a>
+    <a href="#" style="background-color: #cec69e">Question Management</a>
+    <a href="javascript:void(0)" onclick="goToLeaderboard()">Leaderboard</a>
+</aside>
+
+<!-- Main Content -->
+<main id="mainContent" class="main-content">
+    <section class="container">
+        <h1>Welcome, User</h1>
+        <div class="button-group">
+            <button class="action-button" onclick="showModal('answerQuestionModal')">Answer a New Question</button>
+            <button class="action-button" onclick="showModal('questionHistoryModal')">My Question History</button>
         </div>
-        <button class="toggle-button" onclick="toggleDarkMode()">🌙</button>
-    </div>
+    </section>
+</main>
 
-    <!-- Sidebar -->
-    <div id="sidebar" class="sidebar">
-        <a href="javascript:void(0)" class="close-sidebar" onclick="closeSidebar()">&times;</a>
-        <a href="javascript:void(0)" onclick="goToUserMain()">User Main</a>
-        <a href="#" style="background-color: #cec69e">Question Management</a>
-        <a href="javascript:void(0)" onclick="goToLeaderboard()">Leaderboard</a>
+<!-- Answer Question Modal -->
+<dialog id="answerQuestionModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('answerQuestionModal')">&times;</span>
+        <h2>Choose How to Answer</h2>
+        <button onclick="startRandomQuestion()">Random Category</button>
+        <button onclick="showCategorySelection()">Choose Category</button>
+        <!-- Category Selection -->
+        <div id="categorySelection" style="display: none; margin-top: 20px;">
+            <select id="categorySelect">
+                <option value="">Select Category</option>
+                <option value="math">Math</option>
+                <option value="science">Science</option>
+                <option value="history">History</option>
+                <!-- Add more categories as needed -->
+            </select>
+            <button style="margin-top: 10px;" onclick="startCategoryQuestion()">Start</button>
+        </div>
     </div>
+</dialog>
 
-    <!-- Main Content -->
-    <div id="mainContent" class="main-content">
-        <div class="container">
-            <h1>Welcome, User</h1>
-            <div class="button-group">
-                <button class="action-button" onclick="showModal('answerQuestionModal')">Answer a New Question</button>
-                <button class="action-button" onclick="showModal('questionHistoryModal')">My Question History</button>
+<!-- Question History Modal -->
+<dialog id="questionHistoryModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('questionHistoryModal')">&times;</span>
+        <h2>My Question History</h2>
+        <div class="history-list">
+            <!-- Sample History Items -->
+            <div class="history-item">
+                <strong>Question:</strong> What is the capital of Spain?<br>
+                <strong>Your Answer:</strong> Madrid<br>
+                <strong>Correct Answer:</strong> Madrid
             </div>
-        </div>
-    </div>
-
-    <!-- Answer Question Modal -->
-    <div id="answerQuestionModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('answerQuestionModal')">&times;</span>
-            <h2>Choose How to Answer</h2>
-            <button onclick="startRandomQuestion()">Random Category</button>
-            <button onclick="showCategorySelection()">Choose Category</button>
-            <!-- Category Selection -->
-            <div id="categorySelection" style="display: none; margin-top: 20px;">
-                <select id="categorySelect">
-                    <option value="">Select Category</option>
-                    <option value="math">Math</option>
-                    <option value="science">Science</option>
-                    <option value="history">History</option>
-                    <!-- Add more categories as needed -->
-                </select>
-                <button style="margin-top: 10px;" onclick="startCategoryQuestion()">Start</button>
+            <div class="history-item">
+                <strong>Question:</strong> Who painted the Mona Lisa?<br>
+                <strong>Your Answer:</strong> Vincent van Gogh<br>
+                <strong>Correct Answer:</strong> Leonardo da Vinci
             </div>
+            <!-- Add more history items as needed -->
         </div>
     </div>
+</dialog>
 
-    <!-- Question History Modal -->
-    <div id="questionHistoryModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('questionHistoryModal')">&times;</span>
-            <h2>My Question History</h2>
-            <div class="history-list">
-                <!-- Sample History Items -->
-                <div class="history-item">
-                    <strong>Question:</strong> What is the capital of Spain?<br>
-                    <strong>Your Answer:</strong> Madrid<br>
-                    <strong>Correct Answer:</strong> Madrid
-                </div>
-                <div class="history-item">
-                    <strong>Question:</strong> Who painted the Mona Lisa?<br>
-                    <strong>Your Answer:</strong> Vincent van Gogh<br>
-                    <strong>Correct Answer:</strong> Leonardo da Vinci
-                </div>
-                <!-- Add more history items as needed -->
-            </div>
+<!-- Placeholder for Question Modal -->
+<dialog id="questionModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('questionModal')">&times;</span>
+        <h2 id="questionText">Question goes here</h2>
+        <div class="options">
+            <button onclick="submitAnswer('A')">Option A</button>
+            <button onclick="submitAnswer('B')">Option B</button>
+            <button onclick="submitAnswer('C')">Option C</button>
+            <button onclick="submitAnswer('D')">Option D</button>
         </div>
     </div>
-
-    <!-- Placeholder for Question Modal -->
-    <div id="questionModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('questionModal')">&times;</span>
-            <h2 id="questionText">Question goes here</h2>
-            <div class="options">
-                <button onclick="submitAnswer('A')">Option A</button>
-                <button onclick="submitAnswer('B')">Option B</button>
-                <button onclick="submitAnswer('C')">Option C</button>
-                <button onclick="submitAnswer('D')">Option D</button>
-            </div>
-        </div>
-    </div>
+</dialog>
 
     <script>
         function toggleDarkMode() {
